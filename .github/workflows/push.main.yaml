@@ -1,0 +1,19 @@
+name: Push File to Main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          echo "${{ github.sha }}" > hash.txt
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          git add hash.txt
+          git commit -m "Update hash"
+          git push origin main
